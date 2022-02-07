@@ -1,7 +1,7 @@
-import 'package:jfkdev/ux/app_icons.dart';
-import 'package:jfkdev/ux/models/ux_models.dart';
+import 'package:portfolio/ux/app_icons.dart';
+import 'package:portfolio/ux/models/ux_models.dart';
 
-final personalSocialMediaData = <ContentViewModel>[
+const personalSocialMediaData = <ContentViewModel>[
   ContentViewModel(
     title: 'GitHub',
     description: 'jeroen-meijer',
@@ -34,13 +34,13 @@ final personalSocialMediaData = <ContentViewModel>[
   ),
   ContentViewModel(
     title: 'LinkedIn',
-    description: 'jeroen-meijer-ict',
+    description: 'jfkdev',
     icon: AppIcons.linkedin,
-    url: 'https://www.linkedin.com/in/jeroen-meijer-ict/',
+    url: 'https://www.linkedin.com/in/jfkdev/',
   ),
 ];
 
-final communitySocialMediaData = <ContentViewModel>[
+const communitySocialMediaData = <ContentViewModel>[
   ContentViewModel(
     title: 'GitHub',
     description: 'fluttercommunity',

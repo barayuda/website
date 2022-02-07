@@ -1,23 +1,25 @@
-import 'package:flutter_web/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:jfkdev/app_localization.dart';
-import 'package:jfkdev/theme.dart';
-import 'package:jfkdev/utils/utils.dart';
-import 'package:jfkdev/ux/containers/main/main_container.dart';
+import 'package:portfolio/app_localization.dart';
+import 'package:portfolio/models/config.dart';
+import 'package:portfolio/theme.dart';
+import 'package:portfolio/ux/containers/main/main_container.dart';
 
-void main() => runApp(JfkDevApp());
+Future<void> main() async {
+  final config = await Config.parseYaml('config.yaml');
+
+  runApp(JfkDevApp(config: config));
+}
 
 class JfkDevApp extends StatelessWidget {
-  JfkDevApp() {
-    final urlParameters = getCurrentUrlParameters();
-    final localeId = urlParameters['lang'] ?? getBrowserLanguage().split('-').first;
-    GetIt.instance.registerSingleton<Localization>(AppLocalizations.fromLocaleId(localeId));
+  JfkDevApp({required Config config}) {
+    GetIt.instance.registerSingleton<Config>(config);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: AppLocalizations.instance.title,
+      title: AppLocalization.instance.title,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme(),
       home: Scaffold(

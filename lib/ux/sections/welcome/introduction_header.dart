@@ -1,18 +1,16 @@
 import 'dart:math' as math;
 
-import 'package:flutter_web/material.dart';
-import 'package:jfkdev/app_localization.dart';
-import 'package:jfkdev/theme.dart';
-import 'package:jfkdev/utils/utils.dart';
-import 'package:jfkdev/utils/ux_utils.dart';
-import 'package:jfkdev/ux/app_images.dart';
-import 'package:jfkdev/ux/widgets/animatable.dart';
-import 'package:jfkdev/ux/widgets/widget_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:portfolio/app_localization.dart';
+import 'package:portfolio/theme.dart';
+import 'package:portfolio/utils/ux_utils.dart';
+import 'package:portfolio/ux/app_images.dart';
+import 'package:portfolio/ux/widgets/animatable.dart';
 
 class IntroductionHeader extends AnimatableStatefulWidget {
   const IntroductionHeader({
-    Key key,
-    Animation<double> animation,
+    Key? key,
+    Animation<double>? animation,
   }) : super(
           key: key,
           animation: animation,
@@ -23,19 +21,19 @@ class IntroductionHeader extends AnimatableStatefulWidget {
 }
 
 class _IntroductionHeaderState extends AnimatableState<IntroductionHeader> {
-  Animation<double> _iconTranslationAnimation;
-  Animation<double> _titleAnimation;
+  late final Animation<double> _iconAnimation;
+  late final Animation<double> _titleAnimation;
 
   @override
   void initState() {
     super.initState();
-    _iconTranslationAnimation = CurvedAnimation(
+    _iconAnimation = CurvedAnimation(
       parent: baseAnimation,
-      curve: Interval(0.0, 0.6, curve: AppTheme.animationCurveDefault),
+      curve: const Interval(0.0, 0.4, curve: Curves.easeIn),
     );
     _titleAnimation = CurvedAnimation(
       parent: baseAnimation,
-      curve: Interval(0.4, 1.0, curve: AppTheme.animationCurveDefault),
+      curve: const Interval(0.15, 1.0, curve: AppTheme.animationCurveDefault),
     );
   }
 
@@ -45,18 +43,12 @@ class _IntroductionHeaderState extends AnimatableState<IntroductionHeader> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         AnimatedBuilder(
-          animation: _iconTranslationAnimation,
+          animation: _iconAnimation,
           builder: (context, child) {
-            return Transform.scale(
-              scale: 1.4 - (_titleAnimation.value * 0.4),
-              alignment: Alignment.topCenter,
-              child: FractionalTranslation(
-                translation: Offset(0, 0.5 - (_iconTranslationAnimation.value * 0.5)),
-                child: Opacity(
-                  opacity: valueBetween(_iconTranslationAnimation.value, max: 1),
-                  child: child,
-                ),
-              ),
+            return Opacity(
+              // FIXME: Workaround for bug where image would clip and stutter.
+              opacity: (_iconAnimation.value - 0.1).clamp(0.0, 1.0).toDouble(),
+              child: child,
             );
           },
           child: Padding(
@@ -79,32 +71,35 @@ class _IntroductionHeaderState extends AnimatableState<IntroductionHeader> {
                 child: Transform(
                   transform: Matrix4.identity()
                     ..setEntry(3, 2, 0.001)
-                    ..rotateY((math.pi / 2) - (_titleAnimation.value * math.pi) / 2),
+                    ..rotateY(
+                      (math.pi / 2) - (_titleAnimation.value * math.pi) / 2,
+                    ),
                   child: Opacity(
-                    opacity: 1, // valueBetween(_titleAnimation.value, max: 1.0),
+                    opacity:
+                        1, // valueBetween(_titleAnimation.value, max: 1.0),
                     child: child,
                   ),
                 ),
               ),
             );
           },
-          child: Text.rich(
-            TextSpan(
-              style: TextStyle(
+          child: RichText(
+            text: TextSpan(
+              style: const TextStyle(
                 fontFamily: AppTheme.fontFamilyDefault,
                 color: AppTheme.colorTextSecondary,
                 fontSize: 100,
               ),
               children: [
-                TextSpan(text: '${getGreetingForCurrentTime()}.\n'),
-                TextSpan(text: '${AppLocalizations.instance.iAm} '),
+                TextSpan(text: '${getGreetingForCurrentTime()}\n'),
+                TextSpan(text: AppLocalization.instance.introductionPrefix),
                 TextSpan(
-                  text: AppLocalizations.instance.commonName,
-                  style: TextStyle(
+                  text: AppLocalization.instance.commonName,
+                  style: const TextStyle(
                     color: AppTheme.colorTextPrimary,
                   ),
                 ),
-                const TextSpan(text: '.'),
+                TextSpan(text: AppLocalization.instance.introductionSuffix),
               ],
             ),
           ),

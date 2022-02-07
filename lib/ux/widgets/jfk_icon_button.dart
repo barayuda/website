@@ -1,25 +1,21 @@
-import 'package:flutter_web/gestures.dart';
-import 'package:flutter_web/material.dart';
-import 'package:jfkdev/theme.dart';
-import 'package:jfkdev/utils/utils.dart';
-import 'package:jfkdev/utils/ux_utils.dart';
-import 'package:jfkdev/ux/models/ux_models.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:portfolio/utils/utils.dart';
+import 'package:portfolio/ux/models/ux_models.dart';
 
 class JfkIconButton extends StatefulWidget {
   const JfkIconButton({
-    Key key,
-    @required this.model,
+    Key? key,
+    required this.model,
     this.size,
     this.color = Colors.white,
-    // this.showTitleOnHover = false,
     this.onTap,
   }) : super(key: key);
 
   final ContentViewModel model;
-  final double size;
+  final double? size;
   final Color color;
-  // final bool showTitleOnHover;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   _JfkIconButtonState createState() => _JfkIconButtonState();
@@ -30,12 +26,12 @@ class _JfkIconButtonState extends State<JfkIconButton> {
 
   void _onTap() {
     if (widget.onTap != null) {
-      widget.onTap();
+      widget.onTap!();
       return;
     }
 
     if (widget.model.url != null) {
-      openUrl(widget.model.url);
+      openUrl(widget.model.url!);
     }
   }
 
@@ -43,22 +39,20 @@ class _JfkIconButtonState extends State<JfkIconButton> {
     setState(() {
       _isHovering = true;
     });
-
-    setCursor(CursorType.pointer);
   }
 
   void _onPointerExit(PointerExitEvent event) {
     setState(() {
       _isHovering = false;
     });
-    resetCursor();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Listener(
-      onPointerEnter: _onPointerEnter,
-      onPointerExit: _onPointerExit,
+    return MouseRegion(
+      cursor: MaterialStateMouseCursor.clickable,
+      onEnter: _onPointerEnter,
+      onExit: _onPointerExit,
       child: GestureDetector(
         onTap: _onTap,
         child: AnimatedOpacity(

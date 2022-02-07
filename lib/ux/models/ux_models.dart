@@ -1,4 +1,4 @@
-import 'package:flutter_web/widgets.dart';
+import 'package:flutter/widgets.dart';
 
 class ContentViewModel {
   const ContentViewModel({
@@ -11,10 +11,10 @@ class ContentViewModel {
           'At least one field must be provided.',
         );
 
-  final String title;
-  final String description;
-  final IconData icon;
-  final String url;
+  final String? title;
+  final String? description;
+  final IconData? icon;
+  final String? url;
 }
 
 class CursorType {

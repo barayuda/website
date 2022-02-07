@@ -1,16 +1,19 @@
-import 'package:flutter_web/material.dart';
+import 'package:flutter/material.dart';
 
 class FillScreen extends StatelessWidget {
   const FillScreen({
-    Key key,
+    Key? key,
     this.color,
     this.gradient,
-    @required this.child,
-  })  : assert(color == null || gradient == null, 'Either provide only a color or a gradient.'),
+    required this.child,
+  })   : assert(
+          color == null || gradient == null,
+          'Either provide only a color or a gradient.',
+        ),
         super(key: key);
 
-  final Color color;
-  final Gradient gradient;
+  final Color? color;
+  final Gradient? gradient;
   final Widget child;
 
   @override

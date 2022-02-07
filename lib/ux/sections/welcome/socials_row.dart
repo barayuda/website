@@ -1,14 +1,13 @@
-import 'package:flutter_web/material.dart';
-import 'package:jfkdev/utils/utils.dart';
-import 'package:jfkdev/utils/ux_utils.dart';
-import 'package:jfkdev/ux/models/ux_data.dart';
-import 'package:jfkdev/ux/widgets/animatable.dart';
-import 'package:jfkdev/ux/widgets/jfk_icon_button.dart';
+import 'package:flutter/material.dart';
+import 'package:portfolio/utils/ux_utils.dart';
+import 'package:portfolio/ux/models/ux_data.dart';
+import 'package:portfolio/ux/widgets/animatable.dart';
+import 'package:portfolio/ux/widgets/jfk_icon_button.dart';
 
 class SocialsRow extends AnimatableStatefulWidget {
   const SocialsRow({
-    Key key,
-    Animation<double> animation,
+    Key? key,
+    Animation<double>? animation,
   }) : super(
           key: key,
           animation: animation,
@@ -54,8 +53,8 @@ class _SocialsRowState extends AnimatableState<SocialsRow> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: JfkIconButton(
+                size: 32.0,
                 model: personalSocialMediaData.elementAt(i),
-                size: 32,
               ),
             ),
           )

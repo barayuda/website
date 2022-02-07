@@ -1,12 +1,12 @@
-import 'package:flutter_web/material.dart';
-import 'package:jfkdev/theme.dart';
-import 'package:jfkdev/ux/models/ux_models.dart';
-import 'package:jfkdev/ux/widgets/jfk_card.dart';
+import 'package:flutter/material.dart';
+import 'package:portfolio/theme.dart';
+import 'package:portfolio/ux/models/ux_models.dart';
+import 'package:portfolio/ux/widgets/jfk_card.dart';
 
 class HighlightCard extends StatelessWidget {
   const HighlightCard({
-    Key key,
-    @required this.model,
+    Key? key,
+    required this.model,
   }) : super(key: key);
 
   final ContentViewModel model;
@@ -30,15 +30,15 @@ class HighlightCard extends StatelessWidget {
               children: <Widget>[
                 if (model.title != null)
                   Text(
-                    model.title,
-                    style: TextStyle(
+                    model.title!,
+                    style: const TextStyle(
                       fontSize: 24.0,
                     ),
                   ),
                 if (model.description != null)
                   Text(
-                    model.description,
-                    style: TextStyle(
+                    model.description!,
+                    style: const TextStyle(
                       color: AppTheme.colorTextSecondary,
                       fontSize: 16.0,
                     ),
